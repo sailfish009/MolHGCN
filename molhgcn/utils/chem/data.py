@@ -3,7 +3,7 @@ import torch
 from torch.utils.data import DataLoader, Dataset
 
 
-class GraphDataset(Dataset):
+class GraphDataset_Classification(Dataset):
     def __init__(self, g_list, y_tensor, weight):
         self.g_list = g_list
         self.y_tensor = y_tensor
@@ -17,11 +17,11 @@ class GraphDataset(Dataset):
         return self.len
 
 
-class GraphDataLoader(DataLoader):
+class GraphDataLoader_Classification(DataLoader):
 
     def __init__(self, *args, **kwargs):
         kwargs['collate_fn'] = self.collate_fn
-        super(GraphDataLoader, self).__init__(*args, **kwargs)
+        super(GraphDataLoader_Classification, self).__init__(*args, **kwargs)
 
     def collate_fn(self, batch):
         batched_gs = dgl.batch([item[0] for item in batch])
@@ -29,7 +29,7 @@ class GraphDataLoader(DataLoader):
         batched_ws = torch.stack([item[2] for item in batch])
         return (batched_gs, batched_ys, batched_ws)
 
-class TestGraphDataset(Dataset):
+class GraphDataset_Regression(Dataset):
     def __init__(self, g_list, y_tensor):
         self.g_list = g_list
         self.y_tensor = y_tensor
@@ -40,12 +40,11 @@ class TestGraphDataset(Dataset):
     def __len__(self):
         return self.len
 
-
-class TestGraphDataLoader(DataLoader):
+class GraphDataLoader_Regression(DataLoader):
 
     def __init__(self, *args, **kwargs):
         kwargs['collate_fn'] = self.collate_fn
-        super(TestGraphDataLoader, self).__init__(*args, **kwargs)
+        super(GraphDataLoader_Regression, self).__init__(*args, **kwargs)
 
     def collate_fn(self, batch):
         batched_gs = dgl.batch([item[0] for item in batch])

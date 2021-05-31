@@ -16,7 +16,6 @@ def compute_acc(logits, labels, masks):
         num_corrects = (pred == labels).sum(dim=0)
         accs = num_corrects / num_valid_samples  # accuracy per tasks
         acc = accs.mean()
-        # acc = num_corrects.mean()
     return acc
 
 
@@ -34,11 +33,14 @@ def compute_auroc(logits, labels, masks=None, average='micro'):
     if average == 'macro':  # performing masked AUROC marco.
         n_tasks = labels.shape[1]
         scores = []
-        for task in range(n_tasks):
-            task_w = masks[:, task]
-            task_y_true = labels[:, task][task_w != 0].numpy()
-            task_y_pred = pred[:, task][task_w != 0]
-            scores.append(roc_auc_score(task_y_true, task_y_pred))
+        try:
+            for task in range(n_tasks):
+                task_w = masks[:, task]
+                task_y_true = labels[:, task][task_w != 0].numpy()
+                task_y_pred = pred[:, task][task_w != 0]
+                scores.append(roc_auc_score(task_y_true, task_y_pred))
+        except:
+            pass
         auroc = np.average(scores)
 
     return auroc

@@ -7,6 +7,8 @@ dgl 0.5.3
 dgllife 0.2.6
 networkx 2.5
 torch 1.7.0
+scikit-learn 0.22.1
+
 ```
 
 ## Dataset

@@ -1,5 +1,5 @@
 # MolHGCN
-A Hypergraph Convolutional Neural Network for Molecular Properties Prediction using Functional Group
+A Hypergraph Convolutional Neural Network for Molecular Properties Prediction using Functional Group [[paper](https://arxiv.org/abs/2106.01028)]
 
 ## Requirements
 ```
